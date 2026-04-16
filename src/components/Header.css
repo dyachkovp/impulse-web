@@ -1,0 +1,12 @@
+.nav-item.rt-Button:where(.rt-variant-ghost):hover {
+  background-color: rgba(0, 0, 51, 0.04);
+}
+
+.nav-item.rt-Button:where(.rt-variant-ghost):active {
+  background-color: rgba(0, 0, 51, 0.06);
+}
+
+.nav-item-active.rt-Button:where(.rt-variant-ghost):hover,
+.nav-item-active.rt-Button:where(.rt-variant-ghost):active {
+  background-color: rgba(0, 0, 51, 0.06);
+}
