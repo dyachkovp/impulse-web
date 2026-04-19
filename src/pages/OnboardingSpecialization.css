@@ -1,0 +1,15 @@
+/* Показываем галочку на hover и в selected состоянии */
+.spec-check {
+  color: transparent;
+  transition: color 120ms ease;
+}
+
+/* Hover на всей карточке — галочка становится серой */
+.rt-RadioCardsItem:hover .spec-check {
+  color: var(--gray-a8);
+}
+
+/* Выбранная карточка — галочка чёрная (цвет основного текста) */
+.rt-RadioCardsItem[data-state='checked'] .spec-check {
+  color: var(--gray-12);
+}

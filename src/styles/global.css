@@ -1,0 +1,36 @@
+/**
+ * Глобальные стили проекта.
+ *
+ * Подключаем ПОСЛЕ @radix-ui/themes/styles.css, чтобы переопределить
+ * дефолты Radix.
+ */
+
+/* ── Курсоры на интерактивных элементах ───────────────────────────── */
+/* По умолчанию Radix Themes использует cursor: default на большинстве
+ * контролов. Переопределяем через официальные CSS-переменные темы. */
+.radix-themes {
+  --cursor-button: pointer;
+  --cursor-checkbox: pointer;
+  --cursor-link: pointer;
+  --cursor-menu-item: pointer;
+  --cursor-radio: pointer;
+  --cursor-slider-thumb: grab;
+  --cursor-slider-thumb-active: grabbing;
+  --cursor-switch: pointer;
+}
+
+/* Кастомные элементы, не входящие в Radix */
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']),
+a[href],
+label[for],
+summary {
+  cursor: pointer;
+}
+
+/* Недоступные элементы — явный запрещающий курсор */
+button:disabled,
+[aria-disabled='true'],
+[data-disabled] {
+  cursor: not-allowed;
+}

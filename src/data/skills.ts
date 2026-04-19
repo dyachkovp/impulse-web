@@ -21,6 +21,31 @@ export interface Specialization {
   groups: SkillGroup[]
 }
 
+/**
+ * Канонический порядок отображения специализаций в UI
+ * (онбординг, фильтры, профиль). Порядок важен — зафиксирован дизайном.
+ */
+export const SPECIALIZATION_ORDER: string[] = [
+  'Backend',
+  'Frontend',
+  'System Analyst',
+  'QA',
+  'Product Owner',
+  'Business Analyst',
+  'Designer',
+]
+
+/**
+ * Возвращает SKILLS_STRUCTURE, отсортированный согласно SPECIALIZATION_ORDER.
+ */
+export function getOrderedSpecializations(): Specialization[] {
+  return [...SKILLS_STRUCTURE].sort(
+    (a, b) =>
+      SPECIALIZATION_ORDER.indexOf(a.specialization) -
+      SPECIALIZATION_ORDER.indexOf(b.specialization)
+  )
+}
+
 /* ── Структура навыков ── */
 export const SKILLS_STRUCTURE: Specialization[] = [
   {

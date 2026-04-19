@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
 import { Flex, Text, Button } from '@radix-ui/themes'
+import { getSession } from '../state/session'
 
 /**
  * /sber-id — мок страницы авторизации Сбер ID.
@@ -10,6 +11,12 @@ import { Flex, Text, Button } from '@radix-ui/themes'
  */
 export default function SberId() {
   const navigate = useNavigate()
+
+  const handleContinue = () => {
+    // Развилка: см. docs/onboarding.md §1
+    const { isRegistered } = getSession()
+    navigate(isRegistered ? '/dashboard' : '/onboarding/about')
+  }
 
   return (
     <Flex
@@ -80,7 +87,7 @@ export default function SberId() {
             <Button
               size="3"
               color="green"
-              onClick={() => navigate('/dashboard')}
+              onClick={handleContinue}
               style={{ background: '#21a038' }}
             >
               Продолжить

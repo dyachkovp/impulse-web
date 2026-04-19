@@ -52,6 +52,7 @@ docs/           — аналитика фич и бизнес-логика (чи
 - **Не создавай `index.css`/`App.css`** — используй стили Radix Themes. Если нужны кастомные стили — делай колокейшн (`Component.tsx` + `Component.css`) или inline-style для точечных правок
 - **Иконки:** Radix Icons (`@radix-ui/react-icons`) по умолчанию. Кастомные SVG — только когда Radix не подходит (например, логотип или иконки из Figma)
 - **Компоненты Radix Themes** — первый выбор. Не собирай кнопки/формы руками
+- **Курсор `pointer`** на всех кликабельных элементах — глобально настроено в `src/styles/global.css` через переменные `--cursor-*`. Не добавляй `cursor: pointer` inline в компонентах
 - **Не редактируй файлы `dist/`, `node_modules/`**
 - **Роутинг:** `HashRouter` (на случай деплоя без server-side rewrites)
 
