@@ -1,66 +1,104 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { Box, Card, Flex, Heading, Text, TextField, Button, Separator } from '@radix-ui/themes'
-import { EnvelopeClosedIcon, LockClosedIcon } from '@radix-ui/react-icons'
+import { Flex, Text, Button, Checkbox, Link } from '@radix-ui/themes'
+import logoSrc from '../assets/logo-impulse.svg'
 
 export default function Login() {
   const navigate = useNavigate()
+  const [consent, setConsent] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    navigate('/dashboard')
+  const handleLogin = () => {
+    if (!consent) return
+    navigate('/sber-id')
   }
 
   return (
-    <Flex align="center" justify="center" style={{ minHeight: '100vh' }}>
-      <Card size="4" style={{ width: 400 }}>
-        <form onSubmit={handleSubmit}>
-          <Flex direction="column" gap="4">
-            <Heading size="6" align="center">Вход</Heading>
+    <Flex
+      direction="column"
+      style={{ minHeight: '100vh', background: '#f9f9fb' }}
+    >
+      {/* Main content — centered */}
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        style={{ flex: 1, padding: '64px 24px' }}
+      >
+        <Flex direction="column" align="center" gap="6" style={{ width: '100%', maxWidth: 680 }}>
+          {/* Logo */}
+          <img
+            src={logoSrc}
+            alt="Импульс"
+            style={{ height: 64, width: 'auto' }}
+          />
 
-            <Box>
-              <Text as="label" size="2" weight="medium" mb="1">
-                Email
-              </Text>
-              <TextField.Root placeholder="you@example.com" type="email">
-                <TextField.Slot>
-                  <EnvelopeClosedIcon />
-                </TextField.Slot>
-              </TextField.Root>
-            </Box>
+          {/* Tagline */}
+          <Text
+            align="center"
+            size="4"
+            style={{
+              fontStyle: 'italic',
+              color: '#60646c',
+              maxWidth: 360,
+              lineHeight: '28px',
+            }}
+          >
+            AI-driven платформа проектно-ориентированного обучения от Сбера
+          </Text>
 
-            <Box>
-              <Text as="label" size="2" weight="medium" mb="1">
-                Пароль
-              </Text>
-              <TextField.Root placeholder="••••••••" type="password">
-                <TextField.Slot>
-                  <LockClosedIcon />
-                </TextField.Slot>
-              </TextField.Root>
-            </Box>
+          {/* Spacer */}
+          <div style={{ height: 48 }} />
 
-            <Button type="submit" size="3">
-              Войти
-            </Button>
-
-            <Flex align="center" gap="3">
-              <Separator size="4" style={{ flex: 1 }} />
-              <Text size="2" color="gray">или</Text>
-              <Separator size="4" style={{ flex: 1 }} />
-            </Flex>
-
-            <Button
-              type="button"
-              variant="outline"
-              color="green"
-              size="3"
-              onClick={() => navigate('/dashboard')}
+          {/* Consent */}
+          <Flex gap="2" align="start" style={{ width: '100%', maxWidth: 560 }}>
+            <Checkbox
+              checked={consent}
+              onCheckedChange={(v) => setConsent(v === true)}
+              size="2"
+            />
+            <Text
+              as="label"
+              size="2"
+              style={{ color: '#60646c', lineHeight: '20px', cursor: 'pointer' }}
+              onClick={() => setConsent((v) => !v)}
             >
-              Войти по Сбер ID
-            </Button>
+              Я даю свое{' '}
+              <Link color="gray" underline="always" href="#" onClick={(e) => e.preventDefault()}>
+                согласие на обработку персональных данных
+              </Link>{' '}
+              и принимаю условия{' '}
+              <Link color="gray" underline="always" href="#" onClick={(e) => e.preventDefault()}>
+                Пользовательского соглашения
+              </Link>
+            </Text>
           </Flex>
-        </form>
-      </Card>
+
+          {/* Sber ID button */}
+          <Button
+            size="4"
+            color="green"
+            disabled={!consent}
+            onClick={handleLogin}
+            style={{ width: '100%', maxWidth: 560, height: 56 }}
+          >
+            Войти по Сбер ID
+          </Button>
+        </Flex>
+      </Flex>
+
+      {/* Footer */}
+      <Flex justify="center" style={{ padding: '24px 0 48px' }}>
+        <Link
+          color="gray"
+          underline="always"
+          size="2"
+          href="#"
+          onClick={(e) => e.preventDefault()}
+          weight="medium"
+        >
+          Политика конфиденциальности
+        </Link>
+      </Flex>
     </Flex>
   )
 }
