@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import SberId from './pages/SberId'
 import OnboardingAbout from './pages/OnboardingAbout'
 import OnboardingSpecialization from './pages/OnboardingSpecialization'
+import OnboardingAssessment from './pages/OnboardingAssessment'
 import Dashboard from './pages/Dashboard'
 import UiKit from './pages/UiKit'
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/sber-id" element={<SberId />} />
         <Route path="/onboarding/about" element={<OnboardingAbout />} />
         <Route path="/onboarding/specialization" element={<OnboardingSpecialization />} />
+        <Route path="/onboarding/assessment" element={<OnboardingAssessment />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/ui-kit" element={<UiKit />} />
         <Route path="*" element={<Navigate to="/" replace />} />

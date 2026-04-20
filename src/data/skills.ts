@@ -21,6 +21,14 @@ export interface Specialization {
   groups: SkillGroup[]
 }
 
+export function findSpecialization(name: string): Specialization | undefined {
+  return SKILLS_STRUCTURE.find((s) => s.specialization === name)
+}
+
+export function countSkills(spec: Specialization): number {
+  return spec.groups.reduce((n, g) => n + g.skills.length, 0)
+}
+
 /**
  * Канонический порядок отображения специализаций в UI
  * (онбординг, фильтры, профиль). Порядок важен — зафиксирован дизайном.
@@ -430,12 +438,12 @@ export const SKILLS_STRUCTURE: Specialization[] = [
   },
 ]
 
-/* ── Текстовые метки оценок ── */
+/* ── Текстовые метки оценок (источник — мобильное приложение) ── */
 export const RATING_LABELS: Record<Exclude<Rating, null>, string> = {
   1: 'Нет опыта',
   2: 'Начальный',
-  3: 'Базовый',
-  4: 'Уверенный',
+  3: 'Средний',
+  4: 'Продвинутый',
   5: 'Экспертный',
 }
 

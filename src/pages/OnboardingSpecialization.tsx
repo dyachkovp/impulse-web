@@ -4,7 +4,7 @@ import { Flex, Heading, RadioCards, Text, Button } from '@radix-ui/themes'
 import { ArrowRightIcon, CheckIcon } from '@radix-ui/react-icons'
 import OnboardingHeader from '../components/OnboardingHeader'
 import { getOrderedSpecializations } from '../data/skills'
-import { updateProfile, completeOnboarding } from '../state/session'
+import { updateProfile } from '../state/session'
 import './OnboardingSpecialization.css'
 
 export default function OnboardingSpecialization() {
@@ -16,8 +16,7 @@ export default function OnboardingSpecialization() {
   const handleContinue = () => {
     if (!canContinue) return
     updateProfile({ specializations: [selected] })
-    completeOnboarding()
-    navigate('/dashboard')
+    navigate('/onboarding/assessment')
   }
 
   return (
