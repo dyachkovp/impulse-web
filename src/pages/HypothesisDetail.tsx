@@ -3,16 +3,15 @@ import { useNavigate, useParams } from 'react-router'
 import { Flex, Container } from '@radix-ui/themes'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 import Header from '../components/Header'
-import {
-  getHypothesisById,
-  type HypothesisProject,
-} from '../data/hypotheses'
+import { getHypothesisById, getAllProjectsFor } from '../data/hypotheses'
+import type { Project } from '../data/projects'
 import './HypothesisDetail.css'
 
 export default function HypothesisDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const hypothesis = id ? getHypothesisById(id) : undefined
+  const relatedProjects = hypothesis ? getAllProjectsFor(hypothesis.id) : []
 
   useEffect(() => {
     if (!hypothesis) navigate('/hypotheses', { replace: true })
@@ -45,11 +44,11 @@ export default function HypothesisDetail() {
             <Markdown source={hypothesis.description} />
           </article>
 
-          {hypothesis.projects.length > 0 && (
+          {relatedProjects.length > 0 && (
             <>
               <div className="hypothesis-projects-title">Проекты</div>
               <Flex direction="column" gap="3">
-                {hypothesis.projects.map((p) => (
+                {relatedProjects.map((p) => (
                   <ProjectCard
                     key={p.id}
                     project={p}
@@ -146,7 +145,7 @@ function renderInline(text: string) {
 }
 
 interface ProjectCardProps {
-  project: HypothesisProject
+  project: Project
   onOpen: () => void
 }
 
@@ -158,6 +157,11 @@ function ProjectCard({ project, onOpen }: ProjectCardProps) {
     }
   }
 
+  /** Уникальные специализации из вакансий — для бейджей в карточке. */
+  const tags = Array.from(
+    new Set(project.vacancies.map((v) => v.specialization)),
+  )
+
   return (
     <div
       role="link"
@@ -167,11 +171,11 @@ function ProjectCard({ project, onOpen }: ProjectCardProps) {
       onKeyDown={handleKey}
     >
       <div className="project-card-title">{project.title}</div>
-      <div className="project-card-desc">{project.description}</div>
+      <div className="project-card-desc">{project.shortDescription}</div>
       <div className="project-card-footer">
         <div className="project-card-badges">
           <span className="project-card-status">{project.status}</span>
-          {project.tags.map((tag) => (
+          {tags.map((tag) => (
             <span key={tag} className="project-card-tag">
               {tag}
             </span>

@@ -1,0 +1,274 @@
+/* ── Breadcrumb ── */
+.project-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--gray-10);
+}
+
+.project-breadcrumb-link {
+  color: var(--iris-11);
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.project-breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+.project-breadcrumb-separator {
+  color: var(--gray-8);
+}
+
+.project-breadcrumb-current {
+  color: var(--gray-11);
+  max-width: 560px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Card ── */
+.project-card-box {
+  padding: 32px 36px;
+  background: #fff;
+  border: 1px solid var(--gray-a4);
+  border-radius: 16px;
+}
+
+/* ── About ── */
+.project-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.project-status-forming {
+  background: var(--orange-a3);
+  color: var(--orange-11);
+}
+
+.project-status-prototype {
+  background: var(--blue-a3);
+  color: var(--blue-11);
+}
+
+.project-status-done {
+  background: var(--green-a3);
+  color: var(--green-11);
+}
+
+.project-title {
+  margin: 14px 0 14px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--gray-12);
+}
+
+.project-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gray-11);
+}
+
+/* ── Meta ── */
+.project-meta {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-meta-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.project-meta-label {
+  font-size: 14px;
+  color: var(--gray-10);
+}
+
+.project-meta-value {
+  font-size: 14px;
+  color: var(--gray-12);
+  line-height: 1.4;
+}
+
+.project-meta-link {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--iris-11);
+  cursor: pointer;
+}
+
+.project-meta-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Team section ── */
+.project-section-title {
+  margin: 0 0 20px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gray-12);
+  letter-spacing: -0.01em;
+}
+
+.project-subsection-title {
+  margin: 20px 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-11);
+}
+
+.project-team-empty {
+  color: var(--gray-10);
+  font-size: 14px;
+}
+
+/* ── Members ── */
+.project-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-member {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--gray-a2);
+  border-radius: 12px;
+}
+
+.project-member-avatar {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-12);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.project-member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-member-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-12);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-member-uni {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--gray-10);
+}
+
+.project-member-spec {
+  flex: none;
+  padding: 4px 10px;
+  background: #fff;
+  border: 1px solid var(--gray-a4);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--gray-11);
+}
+
+/* ── Vacancies ── */
+.project-vacancies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-vacancy {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--gray-a2);
+  border-radius: 12px;
+}
+
+.project-vacancy-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-vacancy-spec {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray-12);
+}
+
+.project-vacancy-state {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--gray-10);
+}
+
+.project-vacancy-btn {
+  flex: none;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    color 140ms ease;
+}
+
+.project-vacancy-btn-primary {
+  background: var(--gray-a4);
+  color: var(--gray-12);
+}
+
+.project-vacancy-btn-primary:hover {
+  background: var(--gray-a5);
+}
+
+.project-vacancy-btn-text {
+  background: transparent;
+  color: var(--iris-11);
+  padding: 8px 12px;
+}
+
+.project-vacancy-btn-text:hover {
+  background: var(--iris-a3);
+}
+
+.project-vacancy-btn:focus-visible {
+  outline: 2px solid var(--iris-9);
+  outline-offset: 2px;
+}

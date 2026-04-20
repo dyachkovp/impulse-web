@@ -1,26 +1,16 @@
 /**
- * Гипотезы и их лёгкие карточки проектов.
+ * Гипотезы.
  *
- * По факту в проде описание гипотезы — один markdown-текст в БД.
- * Здесь аналог: поле `description` содержит markdown, который
- * рендерится на детальной странице.
+ * Описание гипотезы — один markdown-текст (в проде — из БД). Здесь
+ * аналог: поле `description` хранит markdown, который рендерится
+ * на детальной странице.
  *
- * Проекты внутри гипотезы — лёгкие карточки для ленты и фильтрации.
- * Полные карточки проектов (с командой, задачами и т.д.) будут
- * в отдельной коллекции.
+ * Список проектов, связанных с гипотезой, не хранится тут, а выводится
+ * из канонического хранилища `data/projects.ts` по `hypothesisId`, чтобы
+ * не дублировать данные.
  */
 
-export type HypothesisProjectStatus =
-  | 'Формирование команды'
-  | 'Работа над прототипом'
-
-export interface HypothesisProject {
-  id: string
-  title: string
-  description: string
-  status: HypothesisProjectStatus
-  tags: string[]
-}
+import { projects, type Project } from './projects'
 
 export interface Hypothesis {
   id: number
@@ -28,7 +18,6 @@ export interface Hypothesis {
   shortDescription: string
   /** Markdown: параграфы, списки `- ...`, жирный `**...**`. */
   description: string
-  projects: HypothesisProject[]
 }
 
 /* ── Общий markdown-шаблон описания ──
@@ -70,7 +59,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Рекомендует рацион под цели и ограничения пользователя, подсказывает, что и когда съесть в течение дня.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 2,
@@ -78,24 +66,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Автоматически собирает дневник питания по фото еды и голосовым заметкам — без ручного ввода калорий и БЖУ.',
     description: GENERIC_DESCRIPTION,
-    projects: [
-      {
-        id: 'p-2-1',
-        title: 'Food Vision: фотодневник питания',
-        description:
-          'Мобильный сервис, который по фото еды автоматически собирает дневник калорий и БЖУ пользователя.',
-        status: 'Формирование команды',
-        tags: ['System Analyst', 'Backend', 'Frontend'],
-      },
-      {
-        id: 'p-2-2',
-        title: 'Voice Meal Assistant',
-        description:
-          'Голосовой ассистент для быстрого логирования приёмов пищи на смарт-часах и в мобильном приложении.',
-        status: 'Формирование команды',
-        tags: ['Product Owner', 'Backend', 'Designer'],
-      },
-    ],
   },
   {
     id: 3,
@@ -103,7 +73,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Проверяет чеки и состав продуктов, предупреждает о сомнительных добавках и конфликтах с диетой пользователя.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 4,
@@ -111,7 +80,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Напоминает о приёме, проверяет совместимость и дозировки назначенных препаратов с учётом истории болезни.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 5,
@@ -119,7 +87,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Поиск по внутренней базе знаний ЦПФ через графовую RAG-архитектуру — ответы с точными ссылками на источники.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 6,
@@ -127,16 +94,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Выявляет отклонения в активности по данным с носимых устройств и своевременно уведомляет лечащего врача.',
     description: GENERIC_DESCRIPTION,
-    projects: [
-      {
-        id: 'p-6-1',
-        title: 'Activity Anomaly Tracker',
-        description:
-          'Сервис выявляет отклонения в активности пациента по данным с носимых устройств и уведомляет лечащего врача.',
-        status: 'Формирование команды',
-        tags: ['System Analyst', 'Backend', 'QA'],
-      },
-    ],
   },
   {
     id: 7,
@@ -144,7 +101,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'По серии фото оценивает изменения тела и формирует объективный трекинг прогресса помимо цифр на весах.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 8,
@@ -152,7 +108,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'На основе генетических данных строит профиль рисков и персональные рекомендации по профилактике.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 9,
@@ -160,24 +115,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Автоматизирует запись пациентов, загрузку кабинетов и аналитику ключевых операционных метрик клиники.',
     description: GENERIC_DESCRIPTION,
-    projects: [
-      {
-        id: 'p-9-1',
-        title: 'Clinic Flow: поток пациентов',
-        description:
-          'Автоматизация регистратуры и маршрутизации пациентов в частной клинике: запись, напоминания, переадресация к врачам.',
-        status: 'Формирование команды',
-        tags: ['System Analyst', 'Backend', 'Frontend'],
-      },
-      {
-        id: 'p-9-2',
-        title: 'MedDesk Analytics',
-        description:
-          'Дашборд эффективности врачей, загрузки кабинетов и ключевых операционных метрик клиники.',
-        status: 'Формирование команды',
-        tags: ['Business Analyst', 'Backend', 'Designer'],
-      },
-    ],
   },
   {
     id: 10,
@@ -185,7 +122,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Определяет препарат по фото таблетки или упаковки, подсказывает назначение и правила приёма.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 11,
@@ -193,7 +129,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Отвлекает ребёнка анимацией и мини-играми во время медицинских процедур — снижает стресс и страх.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 12,
@@ -201,7 +136,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Диалоговый ассистент, поддерживающий пользователя через ролевые сценарии и техники самопомощи.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 13,
@@ -209,7 +143,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Подбирает прививки, состав аптечки и рекомендации под страну поездки и состояние здоровья путешественника.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 14,
@@ -217,7 +150,6 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Сопровождает пациента на этапах восстановления: напоминает упражнения, контролирует режим и фиксирует прогресс.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
   {
     id: 15,
@@ -225,18 +157,29 @@ export const hypotheses: Hypothesis[] = [
     shortDescription:
       'Генерирует поведение синтетических пользователей для нагрузочного и A/B-тестирования продуктовых гипотез.',
     description: GENERIC_DESCRIPTION,
-    projects: [],
   },
 ]
 
 export type HypothesisFilter = 'all' | 'with' | 'without'
+
+/** Проекты гипотезы, которые видимы студенту в ленте проектов. */
+export function getVisibleProjectsFor(hypothesisId: number): Project[] {
+  return projects.filter(
+    (p) => p.hypothesisId === hypothesisId && p.status === 'Формирование команды',
+  )
+}
+
+/** Все проекты гипотезы (без учёта статуса). */
+export function getAllProjectsFor(hypothesisId: number): Project[] {
+  return projects.filter((p) => p.hypothesisId === hypothesisId)
+}
 
 /**
  * Для студента "С проектами" = хотя бы один проект в статусе
  * "Формирование команды" (только в такие студент может подаваться).
  */
 export function hasTeamFormingProject(h: Hypothesis): boolean {
-  return h.projects.some((p) => p.status === 'Формирование команды')
+  return getVisibleProjectsFor(h.id).length > 0
 }
 
 export function filterHypotheses(
@@ -244,7 +187,8 @@ export function filterHypotheses(
   mode: HypothesisFilter,
 ): Hypothesis[] {
   if (mode === 'with') return list.filter(hasTeamFormingProject)
-  if (mode === 'without') return list.filter((h) => h.projects.length === 0)
+  if (mode === 'without')
+    return list.filter((h) => getAllProjectsFor(h.id).length === 0)
   return list
 }
 

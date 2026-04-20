@@ -1,0 +1,129 @@
+.project-list-card {
+  display: block;
+  width: 100%;
+  padding: 24px 28px;
+  background: #fff;
+  border: 1px solid var(--gray-a4);
+  border-radius: 16px;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.project-list-card:hover {
+  border-color: var(--gray-a6);
+  box-shadow: 0 6px 20px rgba(0, 0, 20, 0.06);
+  transform: translateY(-1px);
+}
+
+.project-list-card:focus-visible {
+  outline: 2px solid var(--iris-9);
+  outline-offset: 2px;
+}
+
+.project-list-hypothesis-link {
+  display: inline-block;
+  padding: 0;
+  margin-bottom: 10px;
+  background: transparent;
+  border: 0;
+  color: var(--iris-11);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+}
+
+.project-list-hypothesis-link:hover {
+  text-decoration: underline;
+}
+
+.project-list-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gray-12);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.project-list-desc {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--gray-10);
+}
+
+.project-list-status {
+  margin-top: 14px;
+}
+
+.project-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.project-status-forming {
+  background: var(--orange-a3);
+  color: var(--orange-11);
+}
+
+.project-status-prototype {
+  background: var(--blue-a3);
+  color: var(--blue-11);
+}
+
+.project-status-done {
+  background: var(--green-a3);
+  color: var(--green-11);
+}
+
+.project-list-footer {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.project-list-slot-chips {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-slot-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--gray-a3);
+  color: var(--gray-11);
+  font-size: 13px;
+}
+
+.project-list-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--iris-11);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.projects-empty {
+  padding: 48px 0;
+  color: var(--gray-10);
+  text-align: center;
+}
