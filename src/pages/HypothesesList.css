@@ -1,0 +1,62 @@
+.hypothesis-card {
+  display: block;
+  width: 100%;
+  padding: 24px 28px;
+  background: #fff;
+  border: 1px solid var(--gray-a4);
+  border-radius: 16px;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.hypothesis-card:hover {
+  border-color: var(--gray-a6);
+  box-shadow: 0 6px 20px rgba(0, 0, 20, 0.06);
+  transform: translateY(-1px);
+}
+
+.hypothesis-card:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 20, 0.05);
+}
+
+.hypothesis-card:focus-visible {
+  outline: 2px solid var(--iris-9);
+  outline-offset: 2px;
+}
+
+.hypothesis-card-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gray-12);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.hypothesis-card-desc {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--gray-10);
+}
+
+.hypothesis-card-cta {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--iris-11);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hypotheses-empty {
+  padding: 48px 0;
+  color: var(--gray-10);
+  text-align: center;
+}
