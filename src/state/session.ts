@@ -6,7 +6,11 @@
  * считается неавторизованным.
  */
 
-import type { Rating } from '../data/skills'
+import {
+  countSkills,
+  findSpecialization,
+  type Rating,
+} from '../data/skills'
 import type { Specialization } from '../data/projects'
 
 export interface UserProfile {
@@ -66,12 +70,12 @@ const defaultProfile: UserProfile = {
 }
 
 /**
- * Демо-участие: студент уже BackEnd в проекте p4 «Трекер аномалий физической
+ * Демо-участие: студент уже Backend в проекте p4 «Трекер аномалий физической
  * активности» (стадия прототипа). Это даёт видимую ветку логики блокировки
- * при попытке податься на BackEnd в другом проекте.
+ * при попытке податься на Backend в другом проекте.
  */
 const defaultParticipations: Participation[] = [
-  { projectId: 'p4', specialization: 'BackEnd' },
+  { projectId: 'p4', specialization: 'Backend' },
 ]
 
 let state: SessionState = {
@@ -173,6 +177,32 @@ function formatDateToday(): string {
 
 export function getSkillRating(specialization: string, skill: string): Rating {
   return state.assessment[specialization]?.[skill] ?? null
+}
+
+/**
+ * Пройдена ли у студента самооценка по указанной специализации целиком
+ * (оценены все навыки из `SKILLS_STRUCTURE`). Частично пройденная = false.
+ */
+export function isAssessmentCompleted(specialization: string): boolean {
+  const spec = findSpecialization(specialization)
+  if (!spec) return false
+  const ratings = state.assessment[specialization]
+  if (!ratings) return false
+  return Object.keys(ratings).length >= countSkills(spec)
+}
+
+/** Множество специализаций, по которым студент прошёл самооценку целиком. */
+export function getAssessedSpecializations(): Set<string> {
+  const set = new Set<string>()
+  for (const spec of Object.keys(state.assessment)) {
+    if (isAssessmentCompleted(spec)) set.add(spec)
+  }
+  return set
+}
+
+/** Множество специализаций, по которым студент уже участник в каком-либо проекте. */
+export function getParticipatingSpecializations(): Set<string> {
+  return new Set(state.participations.map((p) => p.specialization))
 }
 
 /**

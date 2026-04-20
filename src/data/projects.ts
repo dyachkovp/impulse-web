@@ -12,22 +12,30 @@
  *   разделы «О проекте» и «Команда» (правило применяется на уровне UI).
  */
 
+/**
+ * Канонический набор специализаций.
+ *
+ * Источник правды — `SPECIALIZATION_ORDER` из `data/skills.ts`: те же
+ * названия используются в онбординге, самооценке, фильтрах и вакансиях.
+ * Порядок здесь совпадает с порядком в онбординге (более распространённые
+ * специализации идут первыми).
+ */
 export type Specialization =
-  | 'BackEnd'
-  | 'FrontEnd'
-  | 'System Analytic'
-  | 'QA Engineer'
-  | 'Project owner'
-  | 'Project manager'
+  | 'Backend'
+  | 'Frontend'
+  | 'System Analyst'
+  | 'QA'
+  | 'Product Owner'
+  | 'Business Analyst'
   | 'Designer'
 
 export const SPECIALIZATIONS: Specialization[] = [
-  'BackEnd',
-  'FrontEnd',
-  'System Analytic',
-  'QA Engineer',
-  'Project owner',
-  'Project manager',
+  'Backend',
+  'Frontend',
+  'System Analyst',
+  'QA',
+  'Product Owner',
+  'Business Analyst',
   'Designer',
 ]
 
@@ -79,9 +87,9 @@ export const projects: Project[] = [
     endDate: '29.09.2026',
     members: [],
     vacancies: [
-      { id: 'v1', specialization: 'BackEnd', count: 2 },
-      { id: 'v2', specialization: 'FrontEnd', count: 2 },
-      { id: 'v3', specialization: 'System Analytic', count: 2 },
+      { id: 'v1', specialization: 'Backend', count: 2 },
+      { id: 'v2', specialization: 'Frontend', count: 2 },
+      { id: 'v3', specialization: 'System Analyst', count: 2 },
     ],
   },
   {
@@ -98,9 +106,9 @@ export const projects: Project[] = [
     endDate: '15.01.2026',
     members: [],
     vacancies: [
-      { id: 'v1', specialization: 'BackEnd', count: 2 },
-      { id: 'v2', specialization: 'FrontEnd', count: 2 },
-      { id: 'v3', specialization: 'System Analytic', count: 2 },
+      { id: 'v1', specialization: 'Backend', count: 2 },
+      { id: 'v2', specialization: 'Frontend', count: 2 },
+      { id: 'v3', specialization: 'System Analyst', count: 2 },
     ],
   },
   {
@@ -117,9 +125,9 @@ export const projects: Project[] = [
     endDate: '25.12.2025',
     members: [],
     vacancies: [
-      { id: 'v1', specialization: 'System Analytic', count: 2 },
-      { id: 'v2', specialization: 'BackEnd', count: 3 },
-      { id: 'v3', specialization: 'FrontEnd', count: 2 },
+      { id: 'v1', specialization: 'System Analyst', count: 2 },
+      { id: 'v2', specialization: 'Backend', count: 3 },
+      { id: 'v3', specialization: 'Frontend', count: 2 },
     ],
   },
   {
@@ -135,14 +143,14 @@ export const projects: Project[] = [
     startDate: '10.09.2025',
     endDate: '15.12.2025',
     members: [
-      { name: 'Петров Александр Михайлович', specialization: 'BackEnd', university: 'НИУ ВШЭ' },
-      { name: 'Соколова Мария Дмитриевна', specialization: 'FrontEnd', university: 'МГУ им. М.В. Ломоносова' },
-      { name: 'Кузнецов Иван Алексеевич', specialization: 'QA Engineer', university: 'МФТИ' },
+      { name: 'Петров Александр Михайлович', specialization: 'Backend', university: 'НИУ ВШЭ' },
+      { name: 'Соколова Мария Дмитриевна', specialization: 'Frontend', university: 'МГУ им. М.В. Ломоносова' },
+      { name: 'Кузнецов Иван Алексеевич', specialization: 'QA', university: 'МФТИ' },
     ],
     vacancies: [
-      { id: 'v1', specialization: 'BackEnd', count: 2 },
-      { id: 'v2', specialization: 'FrontEnd', count: 1 },
-      { id: 'v3', specialization: 'QA Engineer', count: 1 },
+      { id: 'v1', specialization: 'Backend', count: 2 },
+      { id: 'v2', specialization: 'Frontend', count: 1 },
+      { id: 'v3', specialization: 'QA', count: 1 },
     ],
   },
   {
@@ -158,11 +166,11 @@ export const projects: Project[] = [
     startDate: '05.10.2025',
     endDate: '10.01.2026',
     members: [
-      { name: 'Волкова Екатерина Сергеевна', specialization: 'BackEnd', university: 'СПбГУ' },
+      { name: 'Волкова Екатерина Сергеевна', specialization: 'Backend', university: 'СПбГУ' },
       { name: 'Новиков Артём Павлович', specialization: 'Designer', university: 'НИУ ВШЭ' },
     ],
     vacancies: [
-      { id: 'v1', specialization: 'FrontEnd', count: 2 },
+      { id: 'v1', specialization: 'Frontend', count: 2 },
     ],
   },
   {
@@ -179,9 +187,50 @@ export const projects: Project[] = [
     endDate: '30.12.2025',
     members: [],
     vacancies: [
-      { id: 'v1', specialization: 'BackEnd', count: 1 },
-      { id: 'v2', specialization: 'QA Engineer', count: 1 },
-      { id: 'v3', specialization: 'Project owner', count: 1 },
+      { id: 'v1', specialization: 'Backend', count: 1 },
+      { id: 'v2', specialization: 'QA', count: 1 },
+      { id: 'v3', specialization: 'Product Owner', count: 1 },
+    ],
+  },
+  {
+    id: 'p7',
+    hypothesisId: 10,
+    title: 'ИИ-распознавание таблеток по фото',
+    description:
+      'Мобильный ассистент определяет препарат по фотографии таблетки или упаковки, подсказывает назначение, дозировку и правила приёма. CV-модель обучается на открытых датасетах и базе партнёрской аптечной сети.',
+    shortDescription:
+      'Распознавание лекарственного препарата по фото с подсказками по приёму и совместимости.',
+    status: 'Формирование команды',
+    curator: 'КОЛЕСНИКОВА ОЛЬГА ИГОРЕВНА',
+    startDate: '10.04.2026',
+    endDate: '10.10.2026',
+    members: [],
+    vacancies: [
+      { id: 'v1', specialization: 'Backend', count: 2 },
+      { id: 'v2', specialization: 'Frontend', count: 1 },
+      { id: 'v3', specialization: 'QA', count: 1 },
+      { id: 'v4', specialization: 'Designer', count: 1 },
+    ],
+  },
+  {
+    id: 'p8',
+    hypothesisId: 13,
+    title: 'Медицинский советник для путешествий',
+    description:
+      'Сервис подбирает рекомендации по прививкам, состав дорожной аптечки и памятку по медицинской безопасности в зависимости от страны поездки, сезона и состояния здоровья путешественника. Источники — ВОЗ, Роспотребнадзор, авторизованные клиники.',
+    shortDescription:
+      'Персональные медицинские рекомендации под страну поездки и состояние здоровья путешественника.',
+    status: 'Формирование команды',
+    curator: 'ЛАЗАРЕВ КИРИЛЛ ВЯЧЕСЛАВОВИЧ',
+    startDate: '05.05.2026',
+    endDate: '20.11.2026',
+    members: [],
+    vacancies: [
+      { id: 'v1', specialization: 'Backend', count: 1 },
+      { id: 'v2', specialization: 'Frontend', count: 1 },
+      { id: 'v3', specialization: 'System Analyst', count: 1 },
+      { id: 'v4', specialization: 'Product Owner', count: 1 },
+      { id: 'v5', specialization: 'Designer', count: 1 },
     ],
   },
 ]
@@ -216,7 +265,55 @@ export function isVisibleToStudent(project: Project): boolean {
   )
 }
 
-/** «Развёрнутый» список специализаций по вакансиям: по одному чипу на каждое открытое место. */
-export function expandedVacancySlots(project: Project): Specialization[] {
-  return project.vacancies.flatMap((v) => Array(v.count).fill(v.specialization))
+/** Уникальные специализации с открытыми местами в проекте, в порядке SPECIALIZATIONS. */
+export function getOpenSpecializations(project: Project): Specialization[] {
+  const seen = new Set<Specialization>()
+  for (const v of project.vacancies) {
+    if (v.count > 0) seen.add(v.specialization)
+  }
+  return SPECIALIZATIONS.filter((s) => seen.has(s))
+}
+
+/**
+ * Ранжирует открытые специализации проекта для показа в карточке списка.
+ *
+ * Приоритеты:
+ *   1. Специализации, по которым у студента пройдена самооценка и он ещё не
+ *      участвует ни в одном другом проекте по этой специализации — самое
+ *      релевантное для подачи заявки.
+ *   2. Остальные специализации в каноническом порядке (`SPECIALIZATIONS`) —
+ *      совпадает с порядком в онбординге.
+ *
+ * Возвращает max `limit` специализаций плюс число «скрытых» для лейбла
+ * «ещё N...».
+ */
+export function rankOpenSpecializationsForCard(
+  project: Project,
+  {
+    assessedSpecs,
+    participatingSpecs,
+    limit = 3,
+  }: {
+    assessedSpecs: ReadonlySet<string>
+    participatingSpecs: ReadonlySet<string>
+    limit?: number
+  },
+): { shown: Specialization[]; hiddenCount: number } {
+  const open = getOpenSpecializations(project)
+
+  const priority: Specialization[] = []
+  const rest: Specialization[] = []
+  for (const spec of open) {
+    if (assessedSpecs.has(spec) && !participatingSpecs.has(spec)) {
+      priority.push(spec)
+    } else {
+      rest.push(spec)
+    }
+  }
+
+  const ordered = [...priority, ...rest]
+  return {
+    shown: ordered.slice(0, limit),
+    hiddenCount: Math.max(0, ordered.length - limit),
+  }
 }

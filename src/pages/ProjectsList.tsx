@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useSyncExternalStore } from 'react'
 import { useNavigate } from 'react-router'
 import { Flex, Text, Container } from '@radix-ui/themes'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
@@ -7,13 +7,23 @@ import { Chips } from '../components/Chips'
 import {
   projects,
   isVisibleToStudent,
-  expandedVacancySlots,
+  rankOpenSpecializationsForCard,
   SPECIALIZATIONS,
   type Project,
   type Specialization,
 } from '../data/projects'
 import { getHypothesisById } from '../data/hypotheses'
+import {
+  getSession,
+  subscribe,
+  getAssessedSpecializations,
+  getParticipatingSpecializations,
+} from '../state/session'
 import './ProjectsList.css'
+
+function useSession() {
+  return useSyncExternalStore(subscribe, getSession, getSession)
+}
 
 type ProjectFilter = 'all' | Specialization
 
@@ -25,6 +35,12 @@ const FILTER_OPTIONS: { value: ProjectFilter; label: string }[] = [
 export default function ProjectsList() {
   const navigate = useNavigate()
   const [filter, setFilter] = useState<ProjectFilter>('all')
+  // Подписка на сессию — чтобы перерисовать приоритет чипов при изменении
+  // самооценки или участий. Само значение не используется: берём производные
+  // множества напрямую после форс-рендера.
+  useSession()
+  const assessedSpecs = getAssessedSpecializations()
+  const participatingSpecs = getParticipatingSpecializations()
 
   const list = useMemo(() => {
     const visible = projects.filter(isVisibleToStudent)
@@ -61,6 +77,8 @@ export default function ProjectsList() {
                 <ProjectCard
                   key={p.id}
                   project={p}
+                  assessedSpecs={assessedSpecs}
+                  participatingSpecs={participatingSpecs}
                   onOpen={() => navigate(`/projects/${p.id}`)}
                   onOpenHypothesis={() =>
                     navigate(`/hypotheses/${p.hypothesisId}`)
@@ -77,13 +95,24 @@ export default function ProjectsList() {
 
 interface CardProps {
   project: Project
+  assessedSpecs: ReadonlySet<string>
+  participatingSpecs: ReadonlySet<string>
   onOpen: () => void
   onOpenHypothesis: () => void
 }
 
-function ProjectCard({ project, onOpen, onOpenHypothesis }: CardProps) {
+function ProjectCard({
+  project,
+  assessedSpecs,
+  participatingSpecs,
+  onOpen,
+  onOpenHypothesis,
+}: CardProps) {
   const hypothesis = getHypothesisById(project.hypothesisId)
-  const slotChips = expandedVacancySlots(project)
+  const { shown, hiddenCount } = rankOpenSpecializationsForCard(project, {
+    assessedSpecs,
+    participatingSpecs,
+  })
 
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -116,19 +145,21 @@ function ProjectCard({ project, onOpen, onOpenHypothesis }: CardProps) {
       <div className="project-list-title">{project.title}</div>
       <div className="project-list-desc">{project.shortDescription}</div>
 
-      <div className="project-list-status">
+      <div className="project-list-footer">
         <span className="project-status-badge project-status-forming">
           {project.status}
         </span>
-      </div>
-
-      <div className="project-list-footer">
         <div className="project-list-slot-chips">
-          {slotChips.map((spec, i) => (
-            <span key={i} className="project-slot-chip">
+          {shown.map((spec) => (
+            <span key={spec} className="project-slot-chip">
               {spec}
             </span>
           ))}
+          {hiddenCount > 0 && (
+            <span className="project-slot-chip-overflow">
+              ещё {hiddenCount}…
+            </span>
+          )}
         </div>
         <span className="project-list-cta">
           К проекту

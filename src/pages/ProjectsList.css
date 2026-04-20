@@ -59,10 +59,6 @@
   color: var(--gray-10);
 }
 
-.project-list-status {
-  margin-top: 14px;
-}
-
 .project-status-badge {
   display: inline-flex;
   align-items: center;
@@ -70,6 +66,8 @@
   border-radius: 999px;
   font-size: 13px;
   font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .project-status-forming {
@@ -91,15 +89,16 @@
   margin-top: 18px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .project-list-slot-chips {
   display: inline-flex;
+  flex: 1 1 auto;
   gap: 8px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .project-slot-chip {
@@ -109,6 +108,14 @@
   border-radius: 999px;
   background: var(--gray-a3);
   color: var(--gray-11);
+  font-size: 13px;
+}
+
+.project-slot-chip-overflow {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 4px;
+  color: var(--gray-10);
   font-size: 13px;
 }
 
