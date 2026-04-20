@@ -1,12 +1,33 @@
-.nav-item.rt-Button:where(.rt-variant-ghost):hover {
-  background-color: rgba(0, 0, 51, 0.04);
+.header-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
-.nav-item.rt-Button:where(.rt-variant-ghost):active {
-  background-color: rgba(0, 0, 51, 0.06);
+.header-nav-item {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-2);
+  background: transparent;
+  border: 0;
+  color: var(--gray-12);
+  font-family: inherit;
+  font-size: var(--font-size-2);
+  line-height: var(--line-height-2);
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 120ms ease, opacity 120ms ease;
 }
 
-.nav-item-active.rt-Button:where(.rt-variant-ghost):hover,
-.nav-item-active.rt-Button:where(.rt-variant-ghost):active {
-  background-color: rgba(0, 0, 51, 0.06);
+.header-nav-item:hover {
+  background: var(--gray-a3);
+}
+
+.header-nav-item:focus-visible {
+  outline: 2px solid var(--focus-8);
+  outline-offset: 2px;
+}
+
+.header-nav-item[data-active='true'] {
+  background: var(--gray-4);
+  opacity: 0.82;
 }

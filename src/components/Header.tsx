@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router'
-import { Flex, Button, IconButton, Text } from '@radix-ui/themes'
+import { Flex, IconButton, Text } from '@radix-ui/themes'
 import logoSrc from '../assets/logo-impulse.svg'
+import { getSession, resetSession } from '../state/session'
 import './Header.css'
 
 const navItems = [
@@ -9,9 +10,23 @@ const navItems = [
   { label: 'Проекты', path: '/projects' },
 ]
 
+/** «Иванов И.» — фамилия + инициал имени. */
+function formatName(firstName: string, lastName: string): string {
+  if (!firstName && !lastName) return ''
+  if (!firstName) return lastName
+  return `${lastName} ${firstName[0]}.`
+}
+
 export default function Header() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { profile } = getSession()
+  const displayName = formatName(profile.firstName, profile.lastName)
+
+  const handleLogout = () => {
+    resetSession()
+    navigate('/')
+  }
 
   return (
     <header
@@ -19,10 +34,9 @@ export default function Header() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '8px 48px',
-        borderBottom: '1px solid rgba(0,0,0,0.06)',
-        backdropFilter: 'blur(8px)',
-        background: 'rgba(255,255,255,0.4)',
+        padding: 'var(--space-3) var(--space-8)',
+        background: 'var(--color-background)',
+        borderBottom: '1px solid var(--gray-a3)',
         position: 'sticky',
         top: 0,
         zIndex: 10,
@@ -33,44 +47,43 @@ export default function Header() {
         <img
           src={logoSrc}
           alt="Импульс"
-          style={{ height: 16, display: 'block' }}
+          style={{ height: 24, display: 'block' }}
         />
       </div>
 
       {/* Nav */}
-      <Flex align="center" gap="2">
+      <nav className="header-nav">
         {navItems.map((item) => {
-          const isActive = location.pathname === item.path
+          const isActive = location.pathname.startsWith(item.path)
           return (
-            <Button
+            <button
               key={item.path}
-              variant="ghost"
-              size="2"
-              color="gray"
-              highContrast={isActive}
-              className={isActive ? 'nav-item nav-item-active' : 'nav-item'}
-              style={{
-                fontWeight: isActive ? 510 : 400,
-                backgroundColor: isActive ? 'rgba(0,0,51,0.06)' : 'transparent',
-              }}
+              type="button"
+              className="header-nav-item"
+              data-active={isActive}
               onClick={() => navigate(item.path)}
             >
               {item.label}
-            </Button>
+            </button>
           )
         })}
-      </Flex>
+      </nav>
 
       {/* User */}
-      <Flex align="center" gap="1" justify="end" style={{ width: 240 }}>
-        <Button variant="ghost" size="2" color="gray">
-          <Text size="2">Николай Иванов</Text>
-        </Button>
-        <IconButton variant="ghost" size="2" color="gray">
+      <Flex align="center" gap="1" justify="end" style={{ width: 220 }}>
+        {displayName && (
+          <Text size="2" color="gray" style={{ marginRight: 4 }}>
+            {displayName}
+          </Text>
+        )}
+        <IconButton
+          variant="ghost"
+          size="2"
+          color="gray"
+          onClick={handleLogout}
+          aria-label="Выйти"
+        >
           <ExitIcon />
-        </IconButton>
-        <IconButton variant="ghost" size="2" color="gray">
-          <HelpIcon />
         </IconButton>
       </Flex>
     </header>
@@ -84,20 +97,6 @@ function ExitIcon() {
         d="M5.33 2H3.33C2.6 2 2 2.6 2 3.33v9.34C2 13.4 2.6 14 3.33 14h2M10.67 11.33L14 8l-3.33-3.33M14 8H5.33"
         stroke="currentColor"
         strokeWidth="1.33"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function HelpIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8 14.13A6.13 6.13 0 1 0 8 1.87a6.13 6.13 0 0 0 0 12.26ZM6.09 6.03a1.91 1.91 0 0 1 3.71.64c0 1.27-1.91 1.91-1.91 1.91M8 11.39h.01"
-        stroke="currentColor"
-        strokeWidth="1.2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
